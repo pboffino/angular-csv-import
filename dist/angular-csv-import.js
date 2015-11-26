@@ -11,6 +11,7 @@ csvImport.directive('ngCsvImport', function() {
 		replace: true,
 		scope:{
 			content:'=?',
+			customHeaders: '=?',
 			header: '=?',
 			headerVisible: '=?',
 			separator: '=?',
@@ -84,8 +85,12 @@ csvImport.directive('ngCsvImport', function() {
 
 				var headers = [];
 				if (content.header) {
-					headers=lines[0].split(content.separator);
-					start = 1;
+					if (customHeaders) {
+						headers = customHeaders;
+					} else {
+						headers=lines[0].split(content.separator);
+						start = 1;
+					}
 				}
 
 				for (var i=start; i<lines.length; i++) {
